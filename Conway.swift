@@ -44,7 +44,8 @@ func gameOfLife(map: [[Int]]) -> Void {
                 let neighbour = countLiveNeighbour(map: currentMap, x: x, y: y)
                 if neighbour == 3 {
                     newMap[y][x] = 1
-                } else if neighbour < 2 || neighbour > 3 {
+                }
+                if neighbour < 2 || neighbour > 3 {
                     newMap[y][x] = 0
                 }
                 if newMap[y][x] == 1 {
