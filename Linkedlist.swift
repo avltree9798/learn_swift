@@ -56,6 +56,7 @@ class LinkedList {
         var curr = self.head
         var next: Node? = nil
         var prev: Node? = nil
+        self.tail = self.head
         while curr != nil {
             next = curr!.next
             curr!.next = prev
