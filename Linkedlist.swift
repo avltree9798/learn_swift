@@ -12,7 +12,7 @@ class LinkedList {
     private var head: Node?
     private var tail: Node?
     
-    public func append(data: Int) -> Void {
+    public func push(data: Int) -> Void {
         if self.head == nil {
             self.head = Node(data: data)
             self.tail = self.head
@@ -27,6 +27,11 @@ class LinkedList {
             return nil
         }
         var curr = self.head
+        if self.head === self.tail {
+            self.head = nil
+            self.tail = nil
+            return curr
+        }
         while curr!.next !== tail {
             curr = curr!.next
         }
@@ -64,7 +69,7 @@ class LinkedList {
 func main() {
     let ll = LinkedList()
     for i in 0...10 {
-        ll.append(data: i)
+        ll.push(data: i)
     }
     let _ = ll.pop()
     ll.reverse()
