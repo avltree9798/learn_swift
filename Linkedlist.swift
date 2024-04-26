@@ -1,78 +1,74 @@
 class Node {
-    var value: Int
+    let data: Int
     var next: Node?
-    init(value: Int, next: Node?) {
-        self.value = value
+    
+    init(data: Int, next: Node? = nil) {
+        self.data = data
         self.next = next
     }
 }
 
-var head: Node? = nil
-var tail: Node? = head
-
-func append(value: Int) {
-    let newNode = Node(value: value, next:nil)
-    if head == nil {
-        head = newNode
-        tail = head
-        return
+class LinkedList {
+    private var head: Node?
+    private var tail: Node?
+    
+    public func append(data: Int) -> Void {
+        if self.head == nil {
+            self.head = Node(data: data)
+            self.tail = self.head
+            return
+        }
+        let newNode = Node(data: data, next: self.head)
+        self.head = newNode
     }
-    tail!.next = newNode
-    tail = newNode
-    return
-}
-
-func pop() -> Node?{
-    let curr = head
-    if head == nil {
-        print("Linked list is empty")
-        return nil
+    
+    public func pop() -> Node? {
+        if self.tail == nil {
+            return nil
+        }
+        var curr = self.head
+        while curr!.next !== tail {
+            curr = curr!.next
+        }
+        let poppedNode = curr!.next
+        curr!.next = nil
+        return poppedNode
     }
-    if head === tail {
-        head = nil
-        tail = nil
-        return curr
+    
+    public func fetchAll() -> [Int] {
+        var values: [Int] = []
+        var curr = self.head
+        while curr != nil {
+            let current = curr!
+            values.append(current.data)
+            curr = current.next
+        }
+        return values
     }
-    head = head!.next
-    return curr
-}
-
-func push(value: Int) {
-    let curr = head
-    let newNode = Node(value: value, next: curr)
-    head = newNode
-}
-
-func reverse() {
-    var curr = head
-    var prev: Node? = nil
-    var next: Node? = nil
-    while curr != nil {
-        next = curr!.next
-        curr!.next = prev
-        prev = curr
-        curr = next
-    }
-    head = prev
-}
-
-func printList() {
-    var curr = head
-    while curr != nil {
-        print(curr!.value)
-        curr = curr!.next
+    
+    public func reverse() {
+        assert(self.head != nil)
+        var curr = self.head
+        var next: Node? = nil
+        var prev: Node? = nil
+        while curr != nil {
+            next = curr!.next
+            curr!.next = prev
+            prev = curr
+            curr = next
+        }
+        self.head = prev
     }
 }
 
 func main() {
-    append(value: 1)
-    append(value: 2)
-    append(value: 3)
-    append(value: 4)
-    let _ = pop()
-    push(value: 1)
-    reverse()
-    printList()
+    let ll = LinkedList()
+    for i in 0...10 {
+        ll.append(data: i)
+    }
+    let _ = ll.pop()
+    ll.reverse()
+    print(ll.fetchAll())
 }
 
 main()
